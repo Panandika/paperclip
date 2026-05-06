@@ -57,3 +57,7 @@ These files are essential. Read them.
 - `./HEARTBEAT.md` -- execution and extraction checklist. Run every heartbeat.
 - `./SOUL.md` -- who you are and how you should act.
 - `./TOOLS.md` -- tools you have access to
+
+## Planning Validation (official docs required)
+
+Whenever you are asked to create or revise a plan that involves a library, framework, SDK, API, CLI tool, or cloud service, you MUST first consult official documentation on the internet (via Context7 MCP when available, otherwise a web search scoped to the vendor's official docs) to confirm the recommended approach, current syntax, version-specific behavior, and deprecations. Cite the specific doc URL(s) in the plan body under a `## References` section so reviewers can audit sources. Do not rely on training-data memory for how to achieve the behavior — verify first, then plan.

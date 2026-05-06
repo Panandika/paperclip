@@ -56,3 +56,9 @@ tests/release-smoke/test-results/
 tests/release-smoke/playwright-report/
 .superset/
 .claude/worktrees/
+
+# Local-only ThinkPad operations (do not push to public fork)
+docker/docker-compose.override.yml
+docker/docker-compose.yml.bak-*
+companies-data/
+shared/

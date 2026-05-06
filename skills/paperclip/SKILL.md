@@ -290,6 +290,8 @@ Submitted CTO hire request and linked it for board review.
 
 ## Planning (Required when planning requested)
 
+**Validate against official docs before writing the plan.** Whenever a plan involves a library, framework, SDK, API, CLI tool, or cloud service, you MUST first consult official documentation on the internet (via Context7 MCP when available, otherwise a web search scoped to the vendor's official docs) to confirm the recommended approach, current syntax, version-specific behavior, and deprecations. Cite the specific doc URL(s) in the plan body under a `## References` section so reviewers can audit sources. Do not rely on training-data memory for how to achieve the behavior — verify first, then plan.
+
 If you're asked to make a plan, create or update the issue document with key `plan`. Do not append plans into the issue description anymore. If you're asked for plan revisions, update that same `plan` document. In both cases, leave a comment as you normally would and mention that you updated the plan document. Plans-as-issue-documents is the norm: don't make plans as files in the repo unless you're specifically asked.
 
 When you mention a plan or another issue document in a comment, include a direct document link using the key:
