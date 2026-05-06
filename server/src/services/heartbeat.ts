@@ -3,6 +3,7 @@ import path from "node:path";
 import { execFile as execFileCallback } from "node:child_process";
 import { promisify } from "node:util";
 import { randomUUID } from "node:crypto";
+import { startRunTrace, type RunTraceHandle } from "./observability/langfuse.js";
 import { and, asc, desc, eq, getTableColumns, gt, inArray, isNull, lt, lte, notInArray, or, sql } from "drizzle-orm";
 import type { Db } from "@paperclipai/db";
 import {
@@ -6497,6 +6498,17 @@ export function heartbeatService(db: Db, options: HeartbeatServiceOptions = {}) 
 
     activeRunExecutions.add(run.id);
 
+    const lfRun: RunTraceHandle = startRunTrace({
+      runId: run.id,
+      name: "heartbeat-run",
+      userId: run.companyId,
+      sessionId: run.agentId,
+      metadata: {
+        invocationSource: run.invocationSource,
+        triggerDetail: run.triggerDetail,
+      },
+    });
+
     try {
     const agent = await getAgent(run.agentId);
     if (!agent) {
@@ -7789,6 +7801,11 @@ export function heartbeatService(db: Db, options: HeartbeatServiceOptions = {}) 
           await finalizeAgentStatus(run.agentId, "failed").catch(() => undefined);
         } finally {
           const latestRun = await getRun(run.id).catch(() => null);
+          lfRun.end({
+            status: latestRun?.status === "succeeded" ? "ok" : "error",
+            statusMessage: latestRun?.error ?? latestRun?.status ?? undefined,
+            output: latestRun ? { status: latestRun.status, finishedAt: latestRun.finishedAt } : undefined,
+          });
           await releaseEnvironmentLeasesForRun({
             runId: run.id,
             companyId: run.companyId,
