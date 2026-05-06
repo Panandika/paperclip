@@ -138,4 +138,12 @@ export async function shutdownLangfuse(): Promise<void> {
   }
 }
 
+const PROJECT_ID = process.env.PAPERCLIP_LANGFUSE_PROJECT_ID ?? "paperclip";
+const PUBLIC_URL = process.env.PAPERCLIP_LANGFUSE_PUBLIC_URL ?? HOST;
+
+export function langfuseTraceUrl(runId: string): string | null {
+  if (!enabled || !PUBLIC_URL) return null;
+  return `${PUBLIC_URL.replace(/\/+$/, "")}/project/${PROJECT_ID}/traces/${encodeURIComponent(runId)}`;
+}
+
 export const langfuseEnabled = enabled;

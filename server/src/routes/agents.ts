@@ -98,6 +98,7 @@ import {
 import { getTelemetryClient } from "../telemetry.js";
 import { assertEnvironmentSelectionForCompany } from "./environment-selection.js";
 import { recoveryService } from "../services/recovery/service.js";
+import { langfuseTraceUrl } from "../services/observability/langfuse.js";
 
 const RUN_LOG_DEFAULT_LIMIT_BYTES = 256_000;
 const RUN_LOG_MAX_LIMIT_BYTES = 1024 * 1024;
@@ -3178,7 +3179,12 @@ export function agentRoutes(
     const retryExhaustedReason = await heartbeat.getRetryExhaustedReason(runId);
     res.json(
       redactCurrentUserValue(
-        { ...run, retryExhaustedReason, outputSilence: await heartbeat.buildRunOutputSilence(run) },
+        {
+          ...run,
+          retryExhaustedReason,
+          outputSilence: await heartbeat.buildRunOutputSilence(run),
+          langfuseTraceUrl: langfuseTraceUrl(run.id),
+        },
         await getCurrentUserRedactionOptions(),
       ),
     );
