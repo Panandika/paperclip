@@ -50,7 +50,8 @@
     "metrics:paperclip-commits": "tsx scripts/paperclip-commit-metrics.ts",
     "perf:issue-chat-long-thread": "node scripts/measure-issue-chat-long-thread.mjs",
     "prompts:migrate-langfuse": "pnpm --filter @paperclipai/server exec tsx scripts/migrate-prompts-to-langfuse.ts",
-    "evals:langfuse": "pnpm --filter @paperclipai/server exec tsx ../evals/langfuse/run-experiment.ts"
+    "evals:langfuse": "pnpm --filter @paperclipai/server exec tsx ../evals/langfuse/run-experiment.ts",
+    "evals:issue-quality": "pnpm --filter @paperclipai/server exec tsx ../evals/langfuse/run-issue-quality.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
